@@ -28,46 +28,45 @@ b. Hacer una función que reciba un diccionario que describa una línea del arch
 """
 
 
-def formatear_csv_stock(lista_stock):
-    linea_formateada = []
-    for linea in range(len(lista_stock)):
-        linea_formateada = lista_stock[linea].split(';')
-
-        linea_formateada = {
-            'nombre' : linea_formateada[0],
-            'codigo' : int(linea_formateada[1]),
-            'precio' : int(linea_formateada[2]),
-            'stock': int(linea_formateada[3])
+def formatear_csv_stock(lineas_stock): #lista de strings
+    lista = [] #lista de diccionarios
+    for linea in lineas_stock:
+        partes = linea.strip().split(';') #lista de los valores en strings
+        producto = {
+            'nombre': partes[0],
+            'codigo': int(partes[1]),
+            'precio': int(partes[2]),
+            'stock': int(partes[3])
         }
-        lista_stock[linea] = linea_formateada
+        lista.append(producto)
+    return lista #devuelve lista con valores formateados
 
-def mostrar_stock(archivo_stock):
-    with open('stock_libreria.csv') as archivo:
-        stock = archivo.readlines()
-    formatear_csv_stock(stock)
-    for producto in range(len(stock)):
-        print('Nombre producto: ', stock[producto]['nombre'])
-        print('Código producto: ', stock[producto]['codigo'])
-        print('Precio por unidad: ', stock[producto]['precio'])
-        print('Stock: ', stock[producto]['stock'])
-
-def agregar_producto(archivo_stock, producto):
-    info = list(producto.values())
-    for elemento in range(len(info)):
-        info[elemento] = str(info[elemento])
-    info = ';'.join(info)
-    with open(archivo_stock, 'a') as archivo:
-        archivo.write(f'\n{info}')
+def mostrar_stock(nombre_archivo):
+    with open(nombre_archivo, 'r') as archivo:
+        lineas = archivo.readlines()
+    lineas = formatear_csv_stock(lineas)
+    for producto in lineas:
+        print('Nombre producto:', producto['nombre'])
+        print('Código producto:', producto['codigo'])
+        print('Precio por unidad:', producto['precio'])
+        print('Stock:', producto['stock'])
     
+def agregar_producto(nombre_archivo, producto):
+    linea = f"{producto['nombre']};{producto['codigo']};{producto['precio']};{producto['stock']}"
+    with open(nombre_archivo, 'a') as archivo:
+        archivo.write('\n' + linea)
+
+
 #---------------------------------------------------------------------------------------
 print('__________________________________')
 mostrar_stock('stock_libreria.csv')
 producto_nuevo = {
     'nombre': 'hojas A4',
-    'código': 35662,
+    'codigo': 35662,
     'precio': 600,
     'stock': 45
 }
 agregar_producto('stock_libreria.csv', producto_nuevo)
 print('__________________________________')
 mostrar_stock('stock_libreria.csv')
+
