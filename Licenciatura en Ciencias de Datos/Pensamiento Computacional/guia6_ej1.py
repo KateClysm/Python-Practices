@@ -54,15 +54,4 @@ with open("pregunta.txt", "r+") as archivo:
     contenido = archivo.read()
     print(contenido)
     respuesta = input("Ingrese una respuesta: ")
-
-    archivo.write(f'\n{respuesta}')
-
-
-#--------------------------------------------------------------------------------------------------------------------------------
-#Usando Seek
-with open("pregunta.txt", "a+") as archivo:
-    archivo.seek(0)
-    print(archivo.read())
-
-    respuesta = input("Ingrese una respuesta: ")
     archivo.write(f'\n{respuesta}')

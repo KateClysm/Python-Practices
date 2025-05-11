@@ -18,10 +18,12 @@ notas = [
     ]
 
 
-def guardar_notas(parciales):
+
+#Usando Generator Expressions & .values()
+""" def guardar_notas(parciales):
     with open('parciales.csv', 'w') as archivo:
         for parcial in parciales:
-            fila = ';'.join(str(valor) for valor in parcial.values()) #generator expression, devuelve una string
+            fila = ';'.join(str(valor) for valor in parcial.values()) 
             archivo.write(fila + '\n') 
 
 def cantidad_aprobados(parciales):
@@ -37,17 +39,17 @@ def cantidad_aprobados(parciales):
     return aprobados
 
 guardar_notas(notas)
-print(f'Cantidad aprobados: {cantidad_aprobados('parciales.csv')}')
+print(f'Cantidad aprobados: {cantidad_aprobados('parciales.csv')}') """
 
 
 
 #-----------Ejemplo sin usar Generator Expressions & .values()
-def guardar_notas2(parciales):
+def guardar_notas2(dict_parciales):
     with open('parciales.csv', 'w') as archivo:
-        for parcial in parciales:
+        for parcial in dict_parciales:
             fila = [
-                str(parcial['nombre']),
-                str(parcial['apellido']),
+                (parcial['nombre']),
+                (parcial['apellido']),
                 str(parcial['dni']),
                 str(parcial['nota'])
             ]
@@ -66,5 +68,5 @@ def cantidad_aprobados2(nombre_archivo):
             aprobados += 1
     return aprobados
 
-# guardar_notas2(notas)
-# print(f'Cantidad aprobados: {cantidad_aprobados2("parciales.csv")}')
+guardar_notas2(notas)
+print(f'Cantidad aprobados: {cantidad_aprobados2("parciales.csv")}')
