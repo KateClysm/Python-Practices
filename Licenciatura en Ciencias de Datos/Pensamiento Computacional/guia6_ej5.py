@@ -27,11 +27,11 @@ b. Hacer una función que reciba un diccionario que describa una línea del arch
 }
 """
 
-
-def formatear_csv_stock(lineas_stock): #lista de strings
-    lista = [] #lista de diccionarios
-    for linea in lineas_stock:
-        partes = linea.strip().split(';') #lista de los valores en strings
+#Devuelve una lista de diccionarios
+def formatear_csv_stock(lista_lineas):
+    lista = []
+    for linea in lista_lineas:
+        partes = linea.strip().split(';')
         producto = {
             'nombre': partes[0],
             'codigo': int(partes[1]),
@@ -39,12 +39,12 @@ def formatear_csv_stock(lineas_stock): #lista de strings
             'stock': int(partes[3])
         }
         lista.append(producto)
-    return lista #devuelve lista con valores formateados
+    return lista
 
 def mostrar_stock(nombre_archivo):
     with open(nombre_archivo, 'r') as archivo:
         lineas = archivo.readlines()
-    lineas = formatear_csv_stock(lineas)
+    lineas = formatear_csv_stock(lineas) #transforma la lista de strings a lista de dicts
     for producto in lineas:
         print('Nombre producto:', producto['nombre'])
         print('Código producto:', producto['codigo'])
@@ -52,20 +52,20 @@ def mostrar_stock(nombre_archivo):
         print('Stock:', producto['stock'])
     
 def agregar_producto(nombre_archivo, producto):
-    linea = f"{producto['nombre']};{producto['codigo']};{producto['precio']};{producto['stock']}"
+    linea = f"\n{producto['nombre']};{producto['codigo']};{producto['precio']};{producto['stock']}"
     with open(nombre_archivo, 'a') as archivo:
-        archivo.write('\n' + linea)
+        archivo.write(linea)
 
 
 #---------------------------------------------------------------------------------------
-print('__________________________________')
-mostrar_stock('stock_libreria.csv')
 producto_nuevo = {
     'nombre': 'hojas A4',
     'codigo': 35662,
     'precio': 600,
     'stock': 45
 }
+print('__________________________________')
+mostrar_stock('stock_libreria.csv')
 agregar_producto('stock_libreria.csv', producto_nuevo)
 print('__________________________________')
 mostrar_stock('stock_libreria.csv')

@@ -20,37 +20,33 @@ que han dicho que he dicho yo.
 Se pide hacer un programa que pida dos palabras: una que se quiera reemplazar y la palabra por la que se quiera reemplazar, cambie el texto y lo guarde en el archivo otra vez. Por ejemplo, si la función recibe “poco” y “mucho”, reemplaza “poco” por “mucho” todas las veces que aparezca en el texto.
 """
 
-def reemplazar(texto):
-    p_a_reemplazar = input('Por qué palabra quiere reemplazar? ')
-    reemplazo = input('Por cuál? ')
-    for oracion in range(len(texto)):
-        if p_a_reemplazar in texto[oracion]:
-            texto[oracion] = texto[oracion].replace(p_a_reemplazar, reemplazo)
-    #no retorna nada porque modifica en el lugar
+def formatear(lista_lineas): 
+    for linea in range(len(lista_lineas)):
+        lista_lineas[linea] = lista_lineas[linea].strip('\n')
 
-#abro
-with open('texto_guia6_ej4.txt') as archivo:
-    texto = archivo.readlines()
-#formateo
-for oracion in range(len(texto)):
-    texto[oracion] = texto[oracion].strip('\n')
-#muestro
-print(texto)
-print('_____________________________________________________________________________--')
-reemplazar(texto)
-print(texto)
-#reemplazo
-with open('texto_guia6_ej4.txt', 'w') as archivo:
-    archivo.write('\n'.join(texto))
+def mostrar(nombre_archivo):
+    with open(nombre_archivo) as archivo:
+        lista_lineas = archivo.readlines()
+    formatear(lista_lineas)
+    for linea in lista_lineas:
+        print(linea)
 
+def reemplazar(nombre_archivo):
+    palabra = input('Qué palabra quiere cambiar?: ')
+    reemplazo = input('Por cuál?: ')
+    with open(nombre_archivo) as archivo:
+        lista_lineas = archivo.readlines()
+    for linea in range(len(lista_lineas)):
+        if palabra in lista_lineas[linea]:
+            lista_lineas[linea] = lista_lineas[linea].replace(palabra, reemplazo)
+    with open(nombre_archivo, 'w') as archivo:
+        archivo.writelines(lista_lineas)
 
-
-
-#chequeo
-with open('texto_guia6_ej4.txt') as archivo:
-    texto = archivo.readlines()
-#formateo
-for oracion in range(len(texto)):
-    texto[oracion] = texto[oracion].strip('\n')
-#muestro
-print(texto)
+print('Texto original: ')
+print('-----------------------------------------------------------')
+mostrar('texto_guia6_ej4.txt')
+print('-----------------------------------------------------------')
+reemplazar('texto_guia6_ej4.txt')
+print('Texto cambiado: ')
+print('-----------------------------------------------------------')
+mostrar('texto_guia6_ej4.txt')
