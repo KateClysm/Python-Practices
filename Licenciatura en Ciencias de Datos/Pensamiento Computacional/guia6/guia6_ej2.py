@@ -41,4 +41,4 @@ print('El dinero total que tiene Ale para el regalo de Sol es: ', dinero_total('
 print('----------------------------------')
 
 #Lista modificada agregando a Tomi:
-mostrar_personas('regalo.txt', 'Participantes: ')
+mostrar_personas('archivos/regalo.txt', 'Participantes: ')

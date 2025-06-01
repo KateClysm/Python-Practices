@@ -13,17 +13,17 @@ Entonces el archivo debería quedar de la forma:
 """
 
 #--------------------------------------------------------------------------------------------------------------------------------
-archivo = open('pregunta.txt')
+archivo = open('archivos/pregunta.txt')
 contenido = archivo.read()
 archivo.close()
 print(contenido)
 respuesta = input('Ingrese una respuesta: ')
 
-archivo = open("pregunta.txt", "a")
+archivo = open("archivos/pregunta.txt", "a")
 archivo.write(f'\n{respuesta}')
 archivo.close()
 
-archivo = open('pregunta.txt')
+archivo = open('archivos/pregunta.txt')
 contenido = archivo.read()
 archivo.close()
 print(contenido) 
@@ -32,16 +32,16 @@ print(contenido)
 #Usando With:
 #cierra automáticamente el archivo aunque ocurra un error
 
-with open('pregunta.txt', 'r') as archivo:
+with open('archivos/pregunta.txt', 'r') as archivo:
     contenido = archivo.read()
 print(contenido)
 
 respuesta = input('Ingrese una respuesta: ')
 
-with open("pregunta.txt", "a") as archivo:
+with open("archivos/pregunta.txt", "a") as archivo:
     archivo.write(f'\n{respuesta}')  
 
-with open('pregunta.txt', 'r') as archivo:
+with open('archivos/pregunta.txt', 'r') as archivo:
     contenido = archivo.read()
 print(contenido)
 
@@ -50,7 +50,7 @@ print(contenido)
 #Usando With y r+
 #Si leemos y luego escribimos,  el “puntero de posición” para escribir queda al final, lo cual produce que escribamos al final del archivo.
 
-with open("pregunta.txt", "r+") as archivo:
+with open("archivos/pregunta.txt", "r+") as archivo:
     contenido = archivo.read()
     print(contenido)
     respuesta = input("Ingrese una respuesta: ")

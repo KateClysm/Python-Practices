@@ -12,7 +12,7 @@ A Tomi no le gusta el violeta
 A Manu no le gusta el marrón 
 """
 
-with open('colores.csv') as archivo_csv_colores:
+with open('archivos/colores.csv') as archivo_csv_colores:
     lineas = archivo_csv_colores.readlines()
 
 for linea in lineas:
@@ -20,11 +20,11 @@ for linea in lineas:
     nombre = datos[0]
     color = datos[1]
     si_no = datos[2]
-    with open('colores.txt', 'a') as archivo_txt_colores:
+    with open('archivos/colores.txt', 'a') as archivo_txt_colores:
         archivo_txt_colores.write(f'A {nombre} {si_no} le gusta el {color}\n')
 
 #Chequeo
-with open('colores.txt') as archivo_txt_colores:
+with open('archivos/colores.txt') as archivo_txt_colores:
     lineas = archivo_txt_colores.readlines()
     for linea in lineas:
         print(linea.strip())
