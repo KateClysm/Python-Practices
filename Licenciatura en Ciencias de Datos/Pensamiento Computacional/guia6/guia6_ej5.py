@@ -65,8 +65,8 @@ producto_nuevo = {
     'stock': 45
 }
 print('__________________________________')
-mostrar_stock('stock_libreria.csv')
-agregar_producto('stock_libreria.csv', producto_nuevo)
+mostrar_stock('archivos/stock_libreria.csv')
+agregar_producto('archivos/stock_libreria.csv', producto_nuevo)
 print('__________________________________')
-mostrar_stock('stock_libreria.csv')
+mostrar_stock('archivos/stock_libreria.csv')
 

@@ -14,13 +14,13 @@ F1;Rápidos y furiosos
 E4;El padrino 
 """
 
-with open('salas.txt', 'r') as archivo_salas:
+with open('archivos/salas.txt', 'r') as archivo_salas:
     salas = archivo_salas.readlines()
 
-with open('peliculas.txt', 'r') as archivo_peliculas:
+with open('archivos/peliculas.txt', 'r') as archivo_peliculas:
     peliculas = archivo_peliculas.readlines()
 
-with open('funciones.csv', 'w') as archivo_funciones:
+with open('archivos/funciones.csv', 'w') as archivo_funciones:
     for i in range(len(salas)):
         sala = salas[i].strip()
         pelicula = peliculas[i].strip()

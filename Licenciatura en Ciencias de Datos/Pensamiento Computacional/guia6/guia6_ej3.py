@@ -14,11 +14,11 @@ Pollo
 Fideos 
 """
 
-with open('compras.txt', 'w') as archivo:
+with open('archivos/compras.txt', 'w') as archivo:
     producto = input('¿Qué agrego a la lista de compras? Ingrese X para salir ')
     while (producto).upper() != 'X':
         archivo.write(f'{producto}\n')
         producto = input('¿Qué agrego a la lista de compras? Ingrese X para salir ')
 
-with open('compras.txt') as archivo:
+with open('archivos/compras.txt') as archivo:
     print(archivo.read())

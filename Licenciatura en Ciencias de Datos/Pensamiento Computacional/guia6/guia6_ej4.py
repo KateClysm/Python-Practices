@@ -44,9 +44,9 @@ def reemplazar(nombre_archivo):
 
 print('Texto original: ')
 print('-----------------------------------------------------------')
-mostrar('texto_guia6_ej4.txt')
+mostrar('archivos/texto_guia6_ej4.txt')
 print('-----------------------------------------------------------')
-reemplazar('texto_guia6_ej4.txt')
+reemplazar('archivos/texto_guia6_ej4.txt')
 print('Texto cambiado: ')
 print('-----------------------------------------------------------')
-mostrar('texto_guia6_ej4.txt')
+mostrar('archivos/texto_guia6_ej4.txt')
