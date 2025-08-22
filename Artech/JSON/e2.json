@@ -1,0 +1,17 @@
+{
+    "personas" : [
+        {
+        "Nombre" : "Ana",
+        "Apellido" : "Perez",
+        "Edad" : 25,
+        "Hobbies" : ["Leer", "Correr"]  
+        },
+        {
+            "Nombre" : "Lore",
+            "Apellido" : "Perez",
+            "Edad" : 22,
+            "Hobbies" : ["Pintar", "Correr"]  
+        }
+    ]
+}
+
