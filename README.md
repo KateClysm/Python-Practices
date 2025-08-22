@@ -40,8 +40,6 @@ Algunos proyectos y ejercicios completados hasta el momento:
 - Time Calculator Project
 - Sudoku Solver
 - Binary Search Tree
-
-🟨 **En proceso / próximos:**
 - Budget App Project
 - Polygon Area Calculator Project
 - Probability Calculator Project
