@@ -1,0 +1,29 @@
+* Ejercicio 1
+    Cargar un archivo CSV y mostrar sus primeras 10 filas.
+
+* Ejercicio 2
+    Leer un JSON y acceder al valor de una clave específica.
+
+* Ejercicio 3
+    Leer un Excel y listar las columnas que contiene.
+
+* Ejercicio 4
+    Filtrar de un CSV a todas las personas mayores de 30 años.
+
+* Ejercicio 5
+    Ordenar un CSV por la columna "Edad" de menor a mayor.
+
+* Ejercicio 6
+    Contar cuántos registros hay en un archivo CSV.
+
+* Ejercicio 7
+    Cargar un archivo CSV y mostrar sus primeras 10 filas.
+
+* Ejercicio 8
+    Leer un JSON y acceder al valor de una clave específica.
+
+* Ejercicio 9
+    Leer un Excel y listar las columnas que contiene.
+
+* Ejercicio 10
+    Filtrar de un CSV a todas las personas mayores de 30 años.

@@ -1,0 +1,37 @@
+Nombre,Apellido,Edad,Ciudad,Profesión
+Santiago,Martínez,30,Buenos Aires,Ingeniero
+Valeria,Fernández,28,Rosario,Doctora
+Matías,Gómez,35,Córdoba,Profesor
+Carolina,Pérez,30,Mendoza,Diseñadora
+Ignacio,Rodríguez,26,Salta,Abogado
+Paula,López,33,Montevideo,Arquitecta
+Andrés,Sánchez,30,Asunción,Contador
+Gabriela,Ramírez,29,Santiago,Periodista
+Hernán,Suárez,31,Lima,Ingeniero
+Patricia,Díaz,24,Bogotá,Enfermera
+Emiliano,Moreno,30,Quito,Desarrollador
+Natalia,Torres,27,La Paz,Profesora
+Ricardo,Romero,32,Caracas,Chef
+Lorena,Alvarez,22,São Paulo,Estudiante
+Facundo,Castro,30,Río de Janeiro,Analista
+Mariana,Ruiz,25,Buenos Aires,Médica
+Ezequiel,Silva,30,Montevideo,Arquitecto
+Florencia,García,34,Córdoba,Ingeniera
+Mauricio,Rojas,30,Mendoza,Docente
+Camila,Muñoz,21,Santiago,Diseñadora
+Alejandro,Fernández,30,Lima,Programador
+Julieta,Pérez,28,Bogotá,Psicóloga
+Cristian,Martínez,36,Asunción,Abogado
+Romina,López,30,Rosario,Contadora
+Gustavo,Suárez,29,Montevideo,Profesor
+Cecilia,Ramírez,30,Quito,Médica
+Martín,Rodríguez,25,Buenos Aires,Ingeniero
+Claudia,Moreno,30,Caracas,Arquitecta
+Esteban,Alvarez,27,São Paulo,Analista
+Micaela,Ruiz,22,Lima,Enfermera
+Fernando,Castro,30,La Paz,Desarrollador
+Patricio,García,29,Rosario,Docente
+Agustina,Silva,33,Bogotá,Diseñadora
+Lucas,Díaz,30,Santiago,Ingeniero
+Rocío,Rojas,24,Córdoba,Psicóloga
+Nicolás,Muñoz,30,Mo
