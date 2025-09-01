@@ -1,0 +1,11 @@
+name,url,id,types,height,weight,location_area_encounters,abilities,base_experience
+bulbasaur,https://pokeapi.co/api/v2/pokemon/1/,1,"grass,poison",7,69,https://pokeapi.co/api/v2/pokemon/1/encounters,"overgrow,chlorophyll",64
+ivysaur,https://pokeapi.co/api/v2/pokemon/2/,2,"grass,poison",10,130,https://pokeapi.co/api/v2/pokemon/2/encounters,"overgrow,chlorophyll",142
+venusaur,https://pokeapi.co/api/v2/pokemon/3/,3,"grass,poison",20,1000,https://pokeapi.co/api/v2/pokemon/3/encounters,"overgrow,chlorophyll",236
+charmander,https://pokeapi.co/api/v2/pokemon/4/,4,fire,6,85,https://pokeapi.co/api/v2/pokemon/4/encounters,"blaze,solar-power",62
+charmeleon,https://pokeapi.co/api/v2/pokemon/5/,5,fire,11,190,https://pokeapi.co/api/v2/pokemon/5/encounters,"blaze,solar-power",142
+charizard,https://pokeapi.co/api/v2/pokemon/6/,6,"fire,flying",17,905,https://pokeapi.co/api/v2/pokemon/6/encounters,"blaze,solar-power",240
+squirtle,https://pokeapi.co/api/v2/pokemon/7/,7,water,5,90,https://pokeapi.co/api/v2/pokemon/7/encounters,"torrent,rain-dish",63
+wartortle,https://pokeapi.co/api/v2/pokemon/8/,8,water,10,225,https://pokeapi.co/api/v2/pokemon/8/encounters,"torrent,rain-dish",142
+blastoise,https://pokeapi.co/api/v2/pokemon/9/,9,water,16,855,https://pokeapi.co/api/v2/pokemon/9/encounters,"torrent,rain-dish",239
+caterpie,https://pokeapi.co/api/v2/pokemon/10/,10,bug,3,29,https://pokeapi.co/api/v2/pokemon/10/encounters,"shield-dust,run-away",39

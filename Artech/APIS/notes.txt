@@ -1,0 +1,32 @@
+API
+Interfaz que permite que dos aplicaciones se comuniquen 
+ej: Cuando usas Google Maps en otra app (Ubber, Rappi), esa app usa la API de Google Maps.
+
+RESTful
+RES : Representational State Transfer
+Es un modelo de arquitectura para diseñar APIs Web
+
+Representation: Cómo viajan los recursos por la red (normalmente JSON, también podría ser XML, HTML,etc)
+State Transfer: el cambio de estado de llos recursos ocurre cuando el cliente envía peticiones HTTP y el servidor responde con representaciones de esos recursos.
+
+HTTP
+
+
+GET
+
+
+POST 
+
+
+PUT
+
+
+DELETE
+
+Principios de RESTful APIs:
+Cliente-Servidor: separación clara entre frontend y backend.
+Sin estado(Stateless): Cada petición lleva todo lo necesario (auth, datos). El servidor no guarda sesión entre llamadas.
+Cacheable:Las respuestas pueden cachearse (ETag, Cache-Control) para rendimiento.
+Interfaz uniforme: recursos con URLs claras 
+Sistema por capas: 
+
