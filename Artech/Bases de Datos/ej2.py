@@ -2,9 +2,13 @@
 # diferente.
 
 import sqlite3
-conexion=sqlite3.connect("bd1.db")
+db_name = "Clientes.db"
+conexion=sqlite3.connect(db_name)
 try:
     conexion.execute("INSERT INTO clientes(nombre) VALUES (?)", ("Thomas",))
+    conexion.execute("INSERT INTO clientes(nombre) VALUES (?)", ("Ayelén",))
+    conexion.execute("INSERT INTO clientes(nombre) VALUES (?)", ("Kate",))
+    conexion.execute("INSERT INTO clientes(nombre) VALUES (?)", ("Loredana",))
     conexion.commit()  # Guardar los cambios
     print("Los datos se ingresaron con éxito")
 except Exception as e:

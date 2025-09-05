@@ -9,6 +9,7 @@
 
 
 
+import sqlite3
 
 
 #Muestra toda la info de la bd
@@ -54,7 +55,7 @@ def delete_client(conection):
 
 
 #------------------Conexión Base de datos----------------------------------------------------
-import sqlite3
+
 conection=sqlite3.connect("bd1.db")
 
 

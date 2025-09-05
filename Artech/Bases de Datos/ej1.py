@@ -3,10 +3,11 @@
 
 
 import sqlite3
-conexion=sqlite3.connect("bd1.db")
+db_name = "Clientes.db"
+conexion=sqlite3.connect(db_name)
 try:
     conexion.execute("""create table clientes (id integer primary key autoincrement, nombre text)""")
     print("se creo la tabla clientes")
 except Exception as e:
-    print("Ups: La tabla clientes ya existe ", e)
+    print("Ups: ", e)
 conexion.close
