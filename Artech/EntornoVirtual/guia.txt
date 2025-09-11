@@ -1,0 +1,168 @@
+Normalmente en proyectos Python se sigue una estructura más estándar, por ejemplo:
+
+EntornoVirtual/
+│
+├── src/                # Carpeta principal del código
+│   ├── database/
+│   ├── functions/
+│   ├── models/
+│   └── main.py
+│
+├── venv/               # Entorno virtual
+├── requirements.txt    # Lista de dependencias
+└── README.md           # Información del proyecto
+
+
+La carpeta models/ es el lugar donde defines las estructuras de datos que representan los objetos principales de tu aplicación (por ejemplo: usuarios, productos, pedidos). Estos modelos funcionan como un "molde" o "plantilla" que describe cómo luce cada entidad, qué atributos tiene y, en muchos casos, cómo se relaciona con otras entidades; si usas una base de datos, los modelos suelen corresponder directamente con las tablas o colecciones que allí se crean.
+
+_________________________________________________________________________________________________________________________________________________________
+
+Con sqlite3 lo mejor es:
+No tener una conexión global abierta.
+Crear una función que devuelva una conexión nueva cada vez.
+Usar with cuando trabajes con la conexión, para que se cierre automáticamente.
+_________________________________________________________________________________________________________________________________________________________
+
+Path viene del módulo pathlib de Python y sirve para trabajar con rutas de archivos y carpetas de forma más clara, flexible y multiplataforma (funciona igual en Windows, Linux y macOS). Con Path puedes crear rutas, combinarlas, comprobar si existen, obtener el nombre o la extensión de un archivo, e incluso crear carpetas si no están. Usarlo en lugar de strings simples ("carpeta/archivo.txt") es considerado una buena práctica, porque hace que tu código sea más legible, menos propenso a errores con las barras / o \ y más fácil de mantener en proyectos que usan archivos o bases de datos.
+
+Ejemplos:
+
+Crear una ruta
+from pathlib import Path
+ruta = Path("database/data_db.db")
+
+Obtener partes de la ruta
+ruta.parent   # -> 'database' (la carpeta)
+ruta.name     # -> 'data_db.db' (nombre con extensión)
+ruta.stem     # -> 'data_db' (nombre sin extensión)
+ruta.suffix   # -> '.db' (extensión)
+
+Comprobar si existe
+ruta.exists()      # True o False
+ruta.is_file()     # True si es archivo
+ruta.is_dir()      # True si es carpeta
+
+Unir rutas sin preocuparte por / o \
+base = Path("database")
+ruta = base / "data_db.db"   # -> "database/data_db.db"
+
+
+_________________________________________________________________________________________________________________________________________________________
+
+Es necesario usar commit en With?
+
+def create_table():
+    with get_connection() as conn:
+
+        cursor = conn.cursor()
+
+        query = """CREATE TABLE IF NOT EXISTS usuarios (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre TEXT,
+                    edad INTEGER)"""
+
+        cursor.execute(query)
+        conn.commit()
+
+Es necesario el commit(), cuando usas SQLite (o la mayoría de las bases de datos SQL), las operaciones que modifican la base de datos —como INSERT, UPDATE, DELETE y también CREATE TABLE— se realizan dentro de una transacción.
+
+Hasta que no llames a conn.commit(), esos cambios no se guardan de forma permanente en el archivo de la base de datos.
+
+Si no llamas a commit(), y el contexto (with) cierra la conexión, SQLite hará un rollback automático, y la tabla usuarios no se creará realmente.
+
+_________________________________________________________________________________________________________________________________________________________
+
+Qué es conn
+
+Cuando haces:
+conn = sqlite3.connect(DB_PATH)
+
+conn es un objeto de tipo sqlite3.Connection que representa la conexión abierta a tu base de datos.
+Con conn puedes administrar la base de datos, pero no puedes ejecutar directamente consultas SQL con ella.
+
+Qué es un cursor
+El cursor es como un puntero dentro de la base de datos que te permite:
+Ejecutar instrucciones SQL
+Recorrer resultados (en consultas SELECT)
+Mantener un estado independiente de la consulta, porque puedes tener varios cursores sobre la misma conexión.
+
+Relación entre conn y cursor
+
+conn: representa la conexión a la base de datos. Sirve para abrirla, cerrarla y hacer commit() o rollback().
+cursor: es el intermediario para ejecutar SQL y obtener resultados.
+
+
+_________________________________________________________________________________________________________________________________________________________
+
+Crear el entorno virtual
+
+**Modo de operar: Primero siempre crear el entorno virtual, luego instalar las dependencias con el comando de requirements
+
+Ve a la carpeta de tu proyecto, por ejemplo:
+cd C:\Users\katec\OneDrive\Escritorio\PROYECTOS\Python-Practices\Artech
+
+Luego ejecuta:
+python -m venv env
+Esto creará una carpeta env/ dentro de tu proyecto con Python y pip aislados.
+
+Activar el entorno virtual
+Windows (PowerShell):
+.\env\Scripts\Activate.ps1
+
+Instalar paquetes dentro del entorno
+Por ejemplo, si quieres FastAPI y Uvicorn:
+pip install fastapi uvicorn
+
+Desactivar el entorno virtual
+Cuando termines de trabajar:
+deactivate
+Esto te devuelve a Python global.
+
+Tip de buenas prácticas:
+Crea un archivo requirements.txt para guardar tus dependencias:
+pip freeze > requirements.txt
+Para instalar todo desde otro equipo o entorno:
+pip install -r requirements.txt
+
+_________________________________________________________________________________________________________________________________________________________
+
+Instalar paquetes dentro del entorno
+Por ejemplo, si quieres FastAPI y Uvicorn:
+pip install fastapi uvicorn
+
+
+_________________________________________________________________________________________________________________________________________________________
+
+Ejecutar la API
+
+Si tu archivo principal es main.py y estás en tu entorno virtual activado:
+
+uvicorn main:app --reload
+
+--reload → reinicia automáticamente el servidor si cambias algo.
+
+Si todo va bien, verás:
+INFO:     Uvicorn running on http://127.0.0.1:8000
+
+2Probar las rutas desde el navegador
+a) Ruta raíz /
+Abre en tu navegador: http://127.0.0.1:8000/
+
+Esto ejecutará hola_mundo("Benjamin", 21) y mostrará el resultado en JSON.
+b) Insertar datos /insert/{nombre}/{edad}
+Por ejemplo, para insertar un usuario llamado Ana de 25 años:
+http://127.0.0.1:8000/insert/Ana/25
+
+
+Esto llamará a tu función insert_datos("Ana", 25) y agregará un registro en la tabla.
+Te devolverá un mensaje: "Datos insertados correctamente" (o un error si algo falla).
+
+c) Consultar datos /seleccionar
+Abre en tu navegador: http://127.0.0.1:8000/seleccionar
+Esto ejecuta tu función select() y devuelve todos los usuarios en formato JSON.
+
+Ejemplo de salida:
+[
+  [1, "Ana", 25],
+  [2, "Benjamin", 21]
+]
