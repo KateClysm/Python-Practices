@@ -1,4 +1,6 @@
-# Ejercicio 10: Partiendo de la base de datos tienda.db del ejercicio anterior, crea un nuevo script que seleccione solo los productos cuyo precio sea mayor a $100. Carga los resultados de esta consulta filtrada en un DataFrame y muéstralo.
+# Ejercicio 12: Agrupar y resumir datos.Usando la base de datos ventas.db del ejercicio 11, crea un DataFrame que resuma la cantidad total vendida de cada producto. El DataFrame debe tener dos columnas: el nombre del producto y la suma total de las ventas.
+
+
 
 import sqlite3, pandas as pd
 
@@ -6,9 +8,9 @@ import sqlite3, pandas as pd
 #Crea una tabla
 def create_table(connection, t_name, attributes):
     try:
-        query = f"CREATE TABLE IF NOT EXISTS {t_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {attributes})"  #Formateo un string
+        query = f"CREATE TABLE IF NOT EXISTS {t_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {attributes})"
         with connection:
-            connection.execute(query) #lo paso como query
+            connection.execute(query) 
             print(f"Se creó (o ya existía) la tabla {t_name}")
     except Exception as e:
         print("Ups: La tabla clientes ya existe ", e)
@@ -65,12 +67,20 @@ def table_to_df(connection, t_name):
 
 
 #Tabla que recibe una query condicionada y devuelve el dataframe
-def select_by_condition(connection, t_name, attributes, condition):
+def select(connection, t_name, attributes="*", top=None, join=None, where=None, group_by=None, having=None, order_by=None):
     try:
-        query = f"SELECT {attributes} FROM {t_name} WHERE {condition}"
-        with connection:
-            df = pd.read_sql_query(query, connection)
-            print(f"DataFrame Generado con éxito: \n--------------------------------------------------------------\n")
+        top = f"LIMIT {top}" if top else ""
+        join = join if join else ""
+        where  = f"WHERE {where}" if where else ""
+        group_by = f"GROUP BY {group_by}" if group_by else ""
+        having = f"HAVING {having}" if having else ""
+        order_by = f"ORDER BY {order_by}" if order_by else ""
+
+        query_parts = [f"SELECT {attributes} FROM {t_name}", join, where, group_by, having, order_by, top]
+        query = " ".join(part for part in query_parts if part)
+
+        df = pd.read_sql_query(query, connection)
+        print(f"DataFrame Generado con éxito \n--------------------------------------------------------------\n")
         return df
     except Exception as e:
         print("Ups:", e)
@@ -78,25 +88,42 @@ def select_by_condition(connection, t_name, attributes, condition):
 
 
 #------------------Conexión Base de datos----------------------------------------------------
-db_name = "Artech/DBS/Store.db"
-connection = sqlite3.connect(db_name) #Si no existe la crea
-
+db_name = "Artech/DBS/Sales.db"
+connection = sqlite3.connect(db_name) 
+connection.execute("PRAGMA foreign_keys = ON;")  #Activa las foreign keys
 
 #--------------Programa Principal-----------------------------------------------------------
 
 create_table(connection, "Products", "Name varchar(30), QuantityPerUnit int, Price decimal")
-print_table(connection, "Products")
+create_table(connection, "Sales", "QuantitySold int, IdProduct int, FOREIGN KEY (IdProduct) REFERENCES Products(id)")
 insert(
     connection,
     "Products",                          
     ["Name", "QuantityPerUnit", "Price"],
     [
-        ("Manzanas", 10, 200),
-        ("Peras", 8, 101),
-        ("Bananas", 12, 180),
-        ("Naranjas", 15, 5.00),
-        ("Uvas", 20, 99)
+        ("Manzanas", 10, 200),   # id = 1
+        ("Peras", 8, 150),       # id = 2
+        ("Bananas", 12, 180),    # id = 3
+        ("Naranjas", 15, 90),    # id = 4
+        ("Uvas", 20, 120)        # id = 5
+    ]
+)
+insert(
+    connection,
+    "Sales",                          
+    ["QuantitySold", "IdProduct"],
+    [
+        (5, 1),   # 5 Manzanas  (Product id=1)
+        (3, 2),   # 3 Peras     (Product id=2)
+        (7, 3),   # 7 Bananas   (Product id=3)
+        (10, 1),  # 10 Manzanas (Product id=1 otra vez)
+        (2, 5)    # 2 Uvas      (Product id=5)
     ]
 )
 df_from_db = table_to_df(connection, "Products")
-print(select_by_condition(connection, "Products", "*", "Price > 100"))
+print(select(connection=connection, t_name="Products", attributes="*", where="Price > 100"))
+
+
+join = "INNER JOIN Sales s ON p.id = s.IdProduct"
+att = "p.Name, (s.QuantitySold * p.Price) AS totalSold"
+print(select(connection, t_name="Products p", attributes=att, join=join, group_by="p.Name"))

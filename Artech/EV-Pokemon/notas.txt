@@ -1,0 +1,18 @@
+models/tablas. -> create_table_from_df
+
+_____________________________________________
+for col, dtype in df.dtypes.items(): 
+
+df.dtypes devuelve una serie donde: El índice son los nombres de las columnas. Los valores son los tipos de datos de cada columna (dtype)
+.items() convierte esa serie en un iterable de pares (columna, dtype).
+Cada elemento es una tupla: (nombre_columna, tipo_columna).
+
+
+_____________________________________________
+type_mapping.get(str(dtype), "TEXT") 
+
+La función get(key, default) de un diccionario busca la clave key.
+
+Si la encuentra, devuelve el valor asociado.
+
+Si no la encuentra, devuelve el valor por defecto, que aquí es "TEXT".

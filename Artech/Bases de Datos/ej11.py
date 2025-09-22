@@ -1,4 +1,5 @@
-# Ejercicio 10: Partiendo de la base de datos tienda.db del ejercicio anterior, crea un nuevo script que seleccione solo los productos cuyo precio sea mayor a $100. Carga los resultados de esta consulta filtrada en un DataFrame y muéstralo.
+# Ejercicio 11: Simular un escenario más realista. Crea una nueva base de datos llamada ventas.db con dos tablas: productos y ventas. La tabla ventas debe tener un id_producto para relacionarse con la tabla productos. Inserta algunos datos en ambas tablas y luego crea un DataFrame que muestre el nombre del producto y la cantidad vendida.
+
 
 import sqlite3, pandas as pd
 
@@ -6,9 +7,9 @@ import sqlite3, pandas as pd
 #Crea una tabla
 def create_table(connection, t_name, attributes):
     try:
-        query = f"CREATE TABLE IF NOT EXISTS {t_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {attributes})"  #Formateo un string
+        query = f"CREATE TABLE IF NOT EXISTS {t_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {attributes})"
         with connection:
-            connection.execute(query) #lo paso como query
+            connection.execute(query) 
             print(f"Se creó (o ya existía) la tabla {t_name}")
     except Exception as e:
         print("Ups: La tabla clientes ya existe ", e)
@@ -65,38 +66,55 @@ def table_to_df(connection, t_name):
 
 
 #Tabla que recibe una query condicionada y devuelve el dataframe
-def select_by_condition(connection, t_name, attributes, condition):
+def select(connection, t_name, attributes, query_join=None, condition=None):
     try:
-        query = f"SELECT {attributes} FROM {t_name} WHERE {condition}"
+        query_join = query_join if query_join else ""
+        condition  = f"WHERE {condition}" if condition else ""
+        query = f"SELECT {attributes} FROM {t_name} {query_join} {condition}"
         with connection:
             df = pd.read_sql_query(query, connection)
-            print(f"DataFrame Generado con éxito: \n--------------------------------------------------------------\n")
+            print(f"DataFrame Generado con éxito \n--------------------------------------------------------------\n")
         return df
     except Exception as e:
         print("Ups:", e)
     
 
 
-#------------------Conexión Base de datos----------------------------------------------------
-db_name = "Artech/DBS/Store.db"
-connection = sqlite3.connect(db_name) #Si no existe la crea
 
+#------------------Conexión Base de datos----------------------------------------------------
+db_name = "Artech/DBS/Sales.db"
+connection = sqlite3.connect(db_name) 
+connection.execute("PRAGMA foreign_keys = ON;")  #Activa las foreign keys
 
 #--------------Programa Principal-----------------------------------------------------------
 
 create_table(connection, "Products", "Name varchar(30), QuantityPerUnit int, Price decimal")
-print_table(connection, "Products")
+create_table(connection, "Sales", "QuantitySold int, IdProduct int, FOREIGN KEY (IdProduct) REFERENCES Products(id)")
 insert(
     connection,
     "Products",                          
     ["Name", "QuantityPerUnit", "Price"],
     [
-        ("Manzanas", 10, 200),
-        ("Peras", 8, 101),
-        ("Bananas", 12, 180),
-        ("Naranjas", 15, 5.00),
-        ("Uvas", 20, 99)
+        ("Manzanas", 10, 200),   # id = 1
+        ("Peras", 8, 150),       # id = 2
+        ("Bananas", 12, 180),    # id = 3
+        ("Naranjas", 15, 90),    # id = 4
+        ("Uvas", 20, 120)        # id = 5
+    ]
+)
+insert(
+    connection,
+    "Sales",                          
+    ["QuantitySold", "IdProduct"],
+    [
+        (5, 1),   # 5 Manzanas  (Product id=1)
+        (3, 2),   # 3 Peras     (Product id=2)
+        (7, 3),   # 7 Bananas   (Product id=3)
+        (10, 1),  # 10 Manzanas (Product id=1 otra vez)
+        (2, 5)    # 2 Uvas      (Product id=5)
     ]
 )
 df_from_db = table_to_df(connection, "Products")
-print(select_by_condition(connection, "Products", "*", "Price > 100"))
+print(select(connection, t_name="Products", attributes="*", condition="Price > 100"))
+join = "INNER JOIN Sales s ON p.id = s.IdProduct"
+print(select(connection, t_name="Products p", attributes="p.Name, s.QuantitySold", query_join=join))

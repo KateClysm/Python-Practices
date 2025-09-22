@@ -1,18 +1,16 @@
 # Ejercicio 9: Crear un script que primero genere una base de datos SQLite con una tabla llamada productos. Inserta al menos 5 registros. Luego, lee toda la tabla de productos y la convierte en un DataFrame de pandas. Finalmente, imprime el DataFrame para verificar que los datos se han cargado correctamente.
 
 
-
-
 import sqlite3, pandas as pd
-
 
 
 #Crea una tabla
 def create_table(connection, t_name, attributes):
     try:
         query = f"CREATE TABLE IF NOT EXISTS {t_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {attributes})"  #Formateo un string
-        connection.execute(query) #lo paso como query
-        print(f"Se creó (o ya existía) la tabla {t_name}")
+        with connection:
+            connection.execute(query) #lo paso como query
+            print(f"Se creó (o ya existía) la tabla {t_name}")
     except Exception as e:
         print("Ups: La tabla clientes ya existe ", e)
     connection.close
@@ -22,9 +20,10 @@ def create_table(connection, t_name, attributes):
 def print_table(connection, t_name):
     try:
         query = f"SELECT * FROM {t_name}"
-        puntero = connection.execute(query)
-        for fila in puntero:
-            print(fila)
+        with connection:
+            puntero = connection.execute(query)
+            for fila in puntero:
+                print(fila)
     except Exception as e:
         print("Ups:", e)
 
@@ -46,14 +45,15 @@ def insert(connection, t_name, a_names, items):
             
             #connection.executemany(query, items) Hace lo mismo que abajo
 
-            for item in items:
-                connection.execute(query, item)  
-            if len(items) == 1:
-                print('Registro insertado con éxito')
-            else:
-                print('Registros insertados con éxito')
+            with connection:
+                for item in items:
+                    connection.execute(query, item)  
+                if len(items) == 1:
+                    print('Registro insertado con éxito')
+                else:
+                    print('Registros insertados con éxito')
             
-        connection.commit()
+                connection.commit()
         
     except Exception as e:
         print("Ups:", e)
@@ -62,14 +62,14 @@ def insert(connection, t_name, a_names, items):
 #Base de datos a DataFrame
 def dbtable_to_df(connection, t_name):
     sql_query = f"SELECT * FROM {t_name};"
-    df = pd.read_sql_query(sql_query, connection)
-    print(f"DataFrame Generado con éxito: \n--------------------------------------------------------------\n{df.head()}")
-    #connection.close()
+    with connection:
+        df = pd.read_sql_query(sql_query, connection)
+        print(f"DataFrame Generado con éxito: \n--------------------------------------------------------------\n{df.head()}")
     return df
 
 
 #------------------Conexión Base de datos----------------------------------------------------
-db_name = "Sales.db"
+db_name = "Artech/DBS/Store.db"
 connection = sqlite3.connect(db_name) #Si no existe la crea
 
 
@@ -79,7 +79,7 @@ create_table(connection, "Products", "Name varchar(30), QuantityPerUnit int, Pri
 print_table(connection, "Products")
 insert(
     connection,
-    "products",                          
+    "Products",                          
     ["Name", "QuantityPerUnit", "Price"],
     [
         ("Manzanas", 10, 3.50),
@@ -91,4 +91,3 @@ insert(
 )
 
 df_from_db = dbtable_to_df(connection, "Products")
-connection.close
